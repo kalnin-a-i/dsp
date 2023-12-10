@@ -39,4 +39,4 @@ def apply_equaizer(speaker_signal, equalizer_coefs, bands):
         fft_speaker[(freqs_speaker < bands[i]) & ((freqs_speaker > bands[i-1]))] /= equalizer_coefs[i]
         
     equalized_signal = ifft(fft_speaker) 
-    return equalized_signal
+    return equalized_signal.real, fft_speaker
