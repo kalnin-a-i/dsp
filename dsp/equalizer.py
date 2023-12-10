@@ -2,14 +2,18 @@ from scipy.fft import fft, ifft, fftfreq
 import numpy as np
 
 
-def get_equalizer(sweeper_original, sweeper_speaker, num_bands=32, ):
+def get_equalizer(sweeper_original,
+                  sweeper_original_sample_rate,
+                  sweeper_speaker,
+                  sweeper_speaker_sample_rate,
+                  num_bands=32):
 
     # max freq defined from Nyquist theorem
-    max_freq = sweeper_original[1] // 2
+    max_freq = sweeper_original_sample_rate // 2
 
     # get fourier of both signals
-    freqs_original, fft_original = fftfreq(len(sweeper_original[0]), 1 / sweeper_original[1]), np.abs(fft(sweeper_original[0]))
-    freqs_speaker, fft_speaker = fftfreq(len(sweeper_speaker[0]), 1 / sweeper_speaker[1]), np.abs(fft(sweeper_speaker[0]))
+    freqs_original, fft_original = fftfreq(len(sweeper_original), 1 / sweeper_original_sample_rate), np.abs(fft(sweeper_original))
+    freqs_speaker, fft_speaker = fftfreq(len(sweeper_speaker), 1 / sweeper_speaker_sample_rate), np.abs(fft(sweeper_speaker))
 
     # create frequency bands
     bands = np.linspace(1, max_freq, num_bands)
@@ -30,10 +34,10 @@ def get_equalizer(sweeper_original, sweeper_speaker, num_bands=32, ):
     return eqaulizer_coefs, bands
 
 
-def apply_equaizer(speaker_signal, equalizer_coefs, bands):
+def apply_equaizer(speaker_signal, speaker_signal_sample_rate, equalizer_coefs, bands):
 
-    freqs_speaker, fft_speaker = fftfreq(len(speaker_signal[0]), 1 / speaker_signal[1]),\
-                                fft(speaker_signal[0])
+    freqs_speaker, fft_speaker = fftfreq(len(speaker_signal), 1 / speaker_signal_sample_rate),\
+                                fft(speaker_signal)
     
     for i in range(1, len(bands)):
         fft_speaker[(freqs_speaker < bands[i]) & ((freqs_speaker > bands[i-1]))] /= equalizer_coefs[i]
