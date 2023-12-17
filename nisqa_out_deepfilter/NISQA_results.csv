@@ -1,0 +1,5 @@
+deg,mos_pred,noi_pred,dis_pred,col_pred,loud_pred,model
+mixed_10dB_DeepFilterNet3.wav,4.4993486,4.2330546,4.5340347,4.262223,4.432996,NISQAv2
+mixed_-5dB_DeepFilterNet3.wav,2.8271754,2.7807465,3.5589013,3.2082727,3.495159,NISQAv2
+mixed_5dB_DeepFilterNet3.wav,4.249021,4.0647273,4.4101715,4.217672,4.344702,NISQAv2
+mixed_0dB_DeepFilterNet3.wav,3.5830634,3.1076086,4.2193975,3.9497182,4.022005,NISQAv2
